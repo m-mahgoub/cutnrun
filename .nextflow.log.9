@@ -1,0 +1,48 @@
+Feb-17 13:15:14.687 [main] DEBUG nextflow.cli.Launcher - $> nextflow run test.nf
+Feb-17 13:15:14.761 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 21.10.0
+Feb-17 13:15:14.781 [main] INFO  nextflow.cli.CmdRun - Launching `test.nf` [kickass_murdock] - revision: fa3064f55f
+Feb-17 13:15:14.793 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: /Users/mohamedmm/Documents/apps/nextflow/cutnrun/nextflow.config
+Feb-17 13:15:14.794 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /Users/mohamedmm/Documents/apps/nextflow/cutnrun/nextflow.config
+Feb-17 13:15:14.812 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
+Feb-17 13:15:15.280 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; plugins-dir=/Users/mohamedmm/.nextflow/plugins
+Feb-17 13:15:15.281 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Feb-17 13:15:15.290 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Feb-17 13:15:15.291 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Feb-17 13:15:15.294 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
+Feb-17 13:15:15.303 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Feb-17 13:15:15.347 [main] DEBUG nextflow.Session - Session uuid: d2d1c4b7-93ea-46db-b170-20c9e23252aa
+Feb-17 13:15:15.347 [main] DEBUG nextflow.Session - Run name: kickass_murdock
+Feb-17 13:15:15.348 [main] DEBUG nextflow.Session - Executor pool size: 12
+Feb-17 13:15:15.381 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 21.10.0 build 5640
+  Created: 11-11-2021 18:27 UTC (13:27 EDT)
+  System: Mac OS X 10.14.6
+  Runtime: Groovy 3.0.9 on OpenJDK 64-Bit Server VM 11.0.9.1+1-LTS
+  Encoding: UTF-8 (UTF-8)
+  Process: 61754@nichdm02149793 [128.231.121.143]
+  CPUs: 12 - Mem: 16 GB (591.9 MB) - Swap: 8 GB (810 MB)
+Feb-17 13:15:15.397 [main] DEBUG nextflow.Session - Work-dir: /Users/mohamedmm/Documents/apps/nextflow/cutnrun/work [Mac OS X]
+Feb-17 13:15:15.410 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
+Feb-17 13:15:15.419 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Feb-17 13:15:15.448 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 13; maxThreads: 1000
+Feb-17 13:15:15.509 [main] DEBUG nextflow.Session - Session start invoked
+Feb-17 13:15:15.727 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Feb-17 13:15:15.776 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 13; maxThreads: 1000
+Feb-17 13:15:15.865 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Feb-17 13:15:15.865 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Feb-17 13:15:15.870 [main] DEBUG nextflow.executor.Executor - [warm up] executor > local
+Feb-17 13:15:15.875 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=12; memory=16 GB; capacity=12; pollInterval=100ms; dumpInterval=5m
+Feb-17 13:15:15.932 [main] DEBUG nextflow.Session - Workflow process names [dsl2]: fastqc
+Feb-17 13:15:15.932 [main] DEBUG nextflow.Session - Ignite dataflow network (2)
+Feb-17 13:15:15.938 [PathVisitor-1] DEBUG nextflow.file.PathVisitor - files for syntax: glob; folder: /Users/mohamedmm/Documents/apps/nextflow/cutnrun/data/reads/; pattern: t0_rep1_{R1,R2}.fastq.gz; options: [:]
+Feb-17 13:15:15.939 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > fastqc
+Feb-17 13:15:15.940 [main] DEBUG nextflow.script.ScriptRunner - > Await termination 
+Feb-17 13:15:15.940 [main] DEBUG nextflow.Session - Session await
+Feb-17 13:15:16.058 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Feb-17 13:15:16.062 [Task submitter] INFO  nextflow.Session - [87/331084] Submitted process > fastqc (1)
+Feb-17 13:15:16.143 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 1; name: fastqc (1); status: COMPLETED; exit: 0; error: -; workDir: /Users/mohamedmm/Documents/apps/nextflow/cutnrun/work/87/331084bf637a04f52a98f9ffb2fac2]
+Feb-17 13:15:16.153 [main] DEBUG nextflow.Session - Session await > all process finished
+Feb-17 13:15:16.239 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Feb-17 13:15:16.244 [main] DEBUG nextflow.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=1; failedCount=0; ignoredCount=0; cachedCount=0; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=0; succeedDuration=52ms; failedDuration=0ms; cachedDuration=0ms;loadCpus=0; loadMemory=0; peakRunning=1; peakCpus=1; peakMemory=0; ]
+Feb-17 13:15:16.391 [main] DEBUG nextflow.CacheDB - Closing CacheDB done
+Feb-17 13:15:16.402 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye
