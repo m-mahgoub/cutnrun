@@ -1,2 +1,0 @@
-fastqc t0_rep1_R1.fastq.gz t0_rep1
-fastqc t0_rep1_R2.fastq.gz t0_rep1
