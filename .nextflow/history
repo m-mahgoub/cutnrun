@@ -33,3 +33,13 @@
 2022-02-17 13:22:19	1.4s	pensive_joliot	OK	e7a8ffe5afecc9cb7a506db8ef71bc48	e8d44688-8d2e-47f2-add0-62ea61e77cf2	nextflow run test.nf
 2022-02-17 13:24:45	803ms	sharp_archimedes	OK	b507d4327c88ca3c84de310c54067474	1fd1b6f1-3d6a-4011-9563-f70a5feaa571	nextflow run test.nf
 2022-02-17 13:25:06	1.6s	loving_kilby	OK	552f2ebcfe1f402889b4f0eda4faa572	1092ea5d-dbed-429c-a7d0-2b929428a424	nextflow run test.nf
+2022-03-12 14:11:28	2.2s	awesome_aryabhata	OK	552f2ebcfe1f402889b4f0eda4faa572	c944e1c6-494a-4b94-bd7b-9a22afac476d	nextflow run test.nf
+2022-03-12 14:12:06	2.2s	disturbed_dijkstra	OK	552f2ebcfe1f402889b4f0eda4faa572	899d7163-d07e-4187-b3f4-11805518624b	nextflow run test.nf
+2022-03-12 14:12:30	1.7s	crazy_bell	OK	552f2ebcfe1f402889b4f0eda4faa572	6684020c-01ed-455c-bde3-dfcdcaa2c089	nextflow run test.nf
+2022-03-12 14:16:20	1.2s	goofy_wiles	OK	552f2ebcfe1f402889b4f0eda4faa572	94c79047-77eb-4385-9234-ddd51dc434cc	nextflow /home/mohamed/nextflow-pipelines/cutnrun/test.nf
+2022-03-12 14:16:30	1.8s	cranky_mcnulty	OK	552f2ebcfe1f402889b4f0eda4faa572	c3b3f81c-a850-45ef-b7c3-a0d120c52fb0	nextflow /home/mohamed/nextflow-pipelines/cutnrun/test.nf
+2022-03-12 14:16:47	1.3s	big_carson	OK	552f2ebcfe1f402889b4f0eda4faa572	520860f2-1176-4c9b-b41c-e6c26b1bfb04	nextflow run test.nf
+2022-03-12 14:20:10	1.3s	elated_woese	OK	552f2ebcfe1f402889b4f0eda4faa572	64e8f67d-2ebc-42bb-99ec-714528c7478f	nextflow run test.nf
+2022-03-12 14:20:14	1.9s	grave_wright	OK	552f2ebcfe1f402889b4f0eda4faa572	6263d3d1-e03d-42be-9942-c27b0ad45d81	nextflow run test.nf
+2022-03-12 14:20:19	1.6s	intergalactic_descartes	OK	552f2ebcfe1f402889b4f0eda4faa572	ed4bb6a7-4ea7-4089-8156-12ecc24e5c13	nextflow run test.nf
+2022-03-12 14:20:36	1.7s	crazy_allen	OK	552f2ebcfe1f402889b4f0eda4faa572	37dc1363-8260-402c-9856-5654d1a96554	nextflow run test.nf
