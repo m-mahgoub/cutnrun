@@ -49,3 +49,14 @@
 2022-03-12 22:43:58	1.5s	happy_fermat	OK	df0aeef61f534fd92be756b2e7665a0b	a1a9b7a5-5cc2-4dff-8d68-2b58612edf20	nextflow run test.nf
 2022-03-12 22:45:15	-	lonely_euclid	-	f8c64c80656a29e8c6575328392b2529	f1c4cbb4-7fa9-42e6-9e02-a3cdaecfe7d1	nextflow run test.nf
 2022-03-12 22:45:59	2.1s	voluminous_jang	OK	e688dc0c639842254669a9aa5df7b609	481d691d-677a-4359-9fc9-f10830741aeb	nextflow run test.nf
+2022-03-13 11:46:27	4.5s	cheesy_mercator	ERR	e688dc0c639842254669a9aa5df7b609	4c9d0910-8738-4e4e-b3fd-725f118d7f57	nextflow run test.nf
+2022-03-13 11:52:42	4.7s	zen_colden	ERR	e688dc0c639842254669a9aa5df7b609	01929ad5-2d14-4c9c-a47c-a404d69b58ba	nextflow run test.nf
+2022-03-13 11:54:46	15m 22s	romantic_ardinghelli	OK	e688dc0c639842254669a9aa5df7b609	f4e34989-af1f-4d25-8a7b-9c4f214545cf	nextflow run test.nf
+2022-03-13 12:12:34	3s	lonely_albattani	OK	e688dc0c639842254669a9aa5df7b609	fdc8accd-83aa-4755-abf0-dae81736be90	nextflow run test.nf
+2022-03-13 12:15:00	5.7s	naughty_fermat	OK	ef1f8a9ae229214f220bb78e1980522f	676057a4-f607-49d6-b216-f568133c3794	nextflow run test.nf
+2022-03-13 12:18:13	4.4s	trusting_joliot	OK	ef1f8a9ae229214f220bb78e1980522f	667c34d4-ae6e-4962-a0c1-325100f73536	nextflow run test.nf
+2022-03-13 12:22:29	13.6s	tiny_lorenz	ERR	4d981ba71361f02eacd0abca1692647f	448d6577-fac8-40d4-b43d-9f550ed0d441	nextflow run test.nf
+2022-03-13 12:27:00	3.5s	special_stallman	ERR	5a155278e988103d760cb2d304fb7d76	8cb24e06-619e-4c22-b44d-2a3b327dff2e	nextflow run test.nf
+2022-03-13 12:31:12	9.6s	maniac_bell	ERR	6af66c78a974048b655803d7b3343cbb	9cd033b2-15e7-481b-8656-e627e0bdcfc3	nextflow run test.nf
+2022-03-13 12:33:57	13.4s	reverent_pauling	OK	d96acff359ef9de6e964426ccf17ab75	2afb4707-3a98-42ee-8c6a-96fad1645573	nextflow run test.nf
+2022-03-13 12:42:16	9.9s	loving_yalow	OK	d96acff359ef9de6e964426ccf17ab75	42cd1916-43c2-459a-9e54-cf4a10868ba0	nextflow run test.nf
