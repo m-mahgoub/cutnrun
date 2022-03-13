@@ -43,3 +43,9 @@
 2022-03-12 14:20:14	1.9s	grave_wright	OK	552f2ebcfe1f402889b4f0eda4faa572	6263d3d1-e03d-42be-9942-c27b0ad45d81	nextflow run test.nf
 2022-03-12 14:20:19	1.6s	intergalactic_descartes	OK	552f2ebcfe1f402889b4f0eda4faa572	ed4bb6a7-4ea7-4089-8156-12ecc24e5c13	nextflow run test.nf
 2022-03-12 14:20:36	1.7s	crazy_allen	OK	552f2ebcfe1f402889b4f0eda4faa572	37dc1363-8260-402c-9856-5654d1a96554	nextflow run test.nf
+2022-03-12 22:38:50	2.1s	magical_murdock	ERR	9f3e8fabb984b86e45e1402a60215a55	262cf25a-ec81-4849-abed-a51fa6f835b2	nextflow run test.nf
+2022-03-12 22:42:03	1.5s	cheeky_bell	OK	125736cd7b14882ca4777b82c2325a78	b18b0aef-1263-47dd-95e3-c4c5368bf0ba	nextflow run test.nf
+2022-03-12 22:43:29	1.4s	deadly_sax	ERR	8bd0f9c43568e1cc87f86739e444738a	acf848bd-2943-4d0d-82aa-624347220727	nextflow run test.nf
+2022-03-12 22:43:58	1.5s	happy_fermat	OK	df0aeef61f534fd92be756b2e7665a0b	a1a9b7a5-5cc2-4dff-8d68-2b58612edf20	nextflow run test.nf
+2022-03-12 22:45:15	-	lonely_euclid	-	f8c64c80656a29e8c6575328392b2529	f1c4cbb4-7fa9-42e6-9e02-a3cdaecfe7d1	nextflow run test.nf
+2022-03-12 22:45:59	2.1s	voluminous_jang	OK	e688dc0c639842254669a9aa5df7b609	481d691d-677a-4359-9fc9-f10830741aeb	nextflow run test.nf
