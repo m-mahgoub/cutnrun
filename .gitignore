@@ -2,3 +2,4 @@
 work/
 results/
 .nextflow/cache/**
+.DS_Store
