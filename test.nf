@@ -22,7 +22,7 @@ nextflow.enable.dsl=2
 
 process fastqc {
     publishDir "$params.outdir/fastqc", mode:'copy'
-    cpus 2
+    cpus 1
     memory '4 GB'
     input:
         tuple val(sampleID), path(reads)
@@ -36,7 +36,39 @@ process fastqc {
     """
 }
 
+process bowtie2_index {
+    publishDir "$params.outdir/bowtie_index", mode:'copy'
+    cpus 2
+    memory '4 GB'
+    input:
+        path(genome_fasta)
+    output:
+        path ("index.*")
+    script:
+    """
+    bowtie2-build --threads ${task.cpus} $genome_fasta index
+    """
+
+}
+
+
+// process bowtie_mapping {
+//     publishDir "$params.outdir/bowtie_mapping", mode:'copy'
+//     input:
+//         tuple val(sampleID), path(reads)
+//     output:
+//         path "${sampleID}.bam"
+//     script:
+//     """
+//     echo bowtie2
+//     """
+// }
+
 workflow {
     reads = Channel.fromFilePairs(params.reads)
     fastqc_ch = fastqc(reads)
+    genome_ch = Channel.fromPath(params.genome)
+    bowtie2_index_ch = bowtie2_index(genome_ch)
+    // bowtie_mapping_ch = bowtie_mapping(reads)
 }
+
