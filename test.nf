@@ -43,32 +43,40 @@ process bowtie2_index {
     input:
         path(genome_fasta)
     output:
-        path ("index.*")
+        path ("bowtie_index")
     script:
     """
     bowtie2-build --threads ${task.cpus} $genome_fasta index
+    mkdir bowtie_index
+    mv index.* bowtie_index
     """
 
 }
 
 
-// process bowtie_mapping {
-//     publishDir "$params.outdir/bowtie_mapping", mode:'copy'
-//     input:
-//         tuple val(sampleID), path(reads)
-//     output:
-//         path "${sampleID}.bam"
-//     script:
-//     """
-//     echo bowtie2
-//     """
-// }
+process bowtie_mapping {
+    publishDir "$params.outdir/bowtie_mapping", mode:'copy'
+    cpus 2
+    memory '4 GB'
+    input:
+        path index
+        tuple val(sampleID), path(reads)
+    output:
+        path "${sampleID}.sorted.bam"
+    script:
+    """
+    bowtie2 -x $index/index -1 ${reads[0]}  -2 ${reads[1]} --threads ${task.cpus} ${params.processes_options.bowtie2} > ${sampleID}.sam
+    samtools view -u ${sampleID}.sam | samtools sort > ${sampleID}.sorted.bam
+    """
+}
 
 workflow {
     reads = Channel.fromFilePairs(params.reads)
     fastqc_ch = fastqc(reads)
     genome_ch = Channel.fromPath(params.genome)
-    bowtie2_index_ch = bowtie2_index(genome_ch)
-    // bowtie_mapping_ch = bowtie_mapping(reads)
+    bowtie2_index(genome_ch)
+    bowtie_mapping_ch = bowtie_mapping(bowtie2_index.out, reads)
+    
 }
+
 
