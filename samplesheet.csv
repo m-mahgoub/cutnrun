@@ -1,7 +1,7 @@
-group,replicate,fastq_1,fastq_2,antibody,control
-SPT5_T0,1,/Users/mohamedmm/Documents/apps/nextflow/cutnrun/data/t0_rep1_R1.fastq.gz,/Users/mohamedmm/Documents/apps/nextflow/cutnrun/data/t0_rep1_R2.fastq.gz,SPT5,SPT5_INPUT
-SPT5_T0,2,/Users/mohamedmm/Documents/apps/nextflow/cutnrun/data/t0_rep2_R1.fastq.gz,/Users/mohamedmm/Documents/apps/nextflow/cutnrun/data/t0_rep2_R2.fastq.gz,SPT5,SPT5_INPUT
-SPT5_T15,1,/Users/mohamedmm/Documents/apps/nextflow/cutnrun/data/t15_rep1_R1.fastq.gz,/Users/mohamedmm/Documents/apps/nextflow/cutnrun/data/t15_rep1_R2.fastq.gz,SPT5,SPT5_INPUT
-SPT5_T15,2,/Users/mohamedmm/Documents/apps/nextflow/cutnrun/data/t15_rep2_R1.fastq.gz,/Users/mohamedmm/Documents/apps/nextflow/cutnrun/data/t15_rep2_R2.fastq.gz,SPT5,SPT5_INPUT
-SPT5_INPUT,1,/Users/mohamedmm/Documents/apps/nextflow/cutnrun/data/input_rep1_R1.fastq.gz,/Users/mohamedmm/Documents/apps/nextflow/cutnrun/data/input_rep1_R2.fastq.gz,,
-SPT5_INPUT,2,/Users/mohamedmm/Documents/apps/nextflow/cutnrun/data/input_rep2_R1.fastq.gz,/Users/mohamedmm/Documents/apps/nextflow/cutnrun/data/input_rep2_R2.fastq.gz,,
+sample_id,group,replicate,fastq_1,fastq_2,antibody,control
+SPT5_T0_rep1,SPT5_T0,1,data/reads/t0_rep1_R1.fastq.gz,data/reads/t0_rep1_R2.fastq.gz,SPT5,SPT5_INPUT
+SPT5_T0_rep2,SPT5_T0,2,data/reads/t0_rep2_R1.fastq.gz,data/reads/t0_rep2_R2.fastq.gz,SPT5,SPT5_INPUT
+SPT5_T15_rep1,SPT5_T15,1,data/reads/t15_rep1_R1.fastq.gz,data/reads/t15_rep1_R2.fastq.gz,SPT5,SPT5_INPUT
+SPT5_T15_rep2,SPT5_T15,2,data/reads/t15_rep2_R1.fastq.gz,data/reads/t15_rep2_R2.fastq.gz,SPT5,SPT5_INPUT
+SPT5_INPUT_rep1,SPT5_INPUT,1,data/reads/input_rep1_R1.fastq.gz,data/reads/input_rep1_R2.fastq.gz,,
+SPT5_INPUT_rep2,SPT5_INPUT,2,data/reads/input_rep2_R1.fastq.gz,data/reads/input_rep2_R2.fastq.gz,,
