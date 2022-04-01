@@ -63,12 +63,7 @@ process bowtie_mapping {
     output:
         path "${sampleID}.sorted.bam"
         path "${sampleID}.log"
-    script:
-    """
-    bowtie2 -x $index/index -1 ${reads[0]}  -2 ${reads[1]} --threads ${task.cpus} ${params.processes_options.bowtie2} > ${sampleID}.sam 2>${sampleID}.log
-    samtools view -u ${sampleID}.sam | samtools sort > ${sampleID}.sorted.bam
 
-    """
     script:
     if( params.single_end )
         """
@@ -83,13 +78,34 @@ process bowtie_mapping {
 
 }
 
+process callpeaks {
+    publishDir "$params.outdir/peaks/narrow", mode:'copy', pattern: '*.bed'
+    cpus 4
+    memory '8 GB'
+    input:
+        path bamFile
+    output:
+        path "${bamFile.getSimpleName()}.bed"
+ 
+    script:
+    if( params.single_end )
+        """
+        macs2 callpeak -t $bamFile -n ${bamFile.getSimpleName()} -f "BAM" --nomodel --extsize 200 ${params.processes_options.macs2}
+        mv ${bamFile.getSimpleName()}_peaks.narrowPeak ${bamFile.getSimpleName()}.bed
+        """
+    else
+        """
+        macs2 callpeak -t $bamFile -n ${bamFile.getSimpleName()} -f "BAMPE" ${params.processes_options.macs2}
+        mv ${bamFile.getSimpleName()}_peaks.narrowPeak ${bamFile.getSimpleName()}.bed
+        """
+}
+
+
 workflow {
     fastqc_ch = fastqc(raw_reads_fastq_ch)
     genome_ch = Channel.fromPath(params.genome)
     bowtie2_index(genome_ch)
-    bowtie_mapping_ch = bowtie_mapping(bowtie2_index.out, raw_reads_fastq_ch)
-    // ch_raw_reads_fastq.view()
-    
+    bowtie_mapping(bowtie2_index.out, raw_reads_fastq_ch)
+    callpeaks(bowtie_mapping.out[0])
+    // bowtie_mapping.out[0].view()
 }
-
-
