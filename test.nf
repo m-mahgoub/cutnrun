@@ -14,7 +14,7 @@ if (params.single_end) {
 process fastqc {
     publishDir "$params.outdir/fastqc", mode:'copy'
     cpus 2
-    memory '8 GB'
+    memory '4 GB'
     input:
         tuple val(sampleID), path(reads)
     output:
@@ -37,7 +37,7 @@ process fastqc {
 process bowtie2_index {
     publishDir "$params.outdir/bowtie_index", mode:'copy'
     cpus 4
-    memory '8 GB'
+    memory '4 GB'
     input:
         path(genome_fasta)
     output:
@@ -53,7 +53,7 @@ process bowtie2_index {
 
 
 process bowtie_mapping {
-    publishDir "$params.outdir/bowtie_mapping/bams", mode:'copy', pattern: '*.bam'
+    publishDir "$params.outdir/bowtie_mapping/bams", mode:'copy', pattern: '*.ba*'
     publishDir "$params.outdir/bowtie_mapping/logs", mode:'copy', pattern: '*.log'
     cpus 2
     memory '4 GB'
@@ -62,6 +62,7 @@ process bowtie_mapping {
         tuple val(sampleID), path(reads)
     output:
         path "${sampleID}.sorted.bam"
+        path "${sampleID}.sorted.bai"
         path "${sampleID}.log"
 
     script:
@@ -69,11 +70,13 @@ process bowtie_mapping {
         """
         bowtie2 -x $index/index -U ${reads[0]}  --threads ${task.cpus} ${params.processes_options.bowtie2} > ${sampleID}.sam 2>${sampleID}.log
         samtools view -u ${sampleID}.sam | samtools sort > ${sampleID}.sorted.bam
+        samtools index ${sampleID}.sorted.bam ${sampleID}.sorted.bai
         """
     else
         """
         bowtie2 -x $index/index -1 ${reads[0]}  -2 ${reads[1]} --threads ${task.cpus} ${params.processes_options.bowtie2} > ${sampleID}.sam 2>${sampleID}.log
         samtools view -u ${sampleID}.sam | samtools sort > ${sampleID}.sorted.bam
+        samtools index ${sampleID}.sorted.bam ${sampleID}.sorted.bai
         """
 
 }
@@ -81,7 +84,7 @@ process bowtie_mapping {
 process callpeaks {
     publishDir "$params.outdir/peaks/narrow", mode:'copy', pattern: '*.bed'
     cpus 4
-    memory '8 GB'
+    memory '4 GB'
     input:
         path bamFile
     output:
@@ -100,12 +103,28 @@ process callpeaks {
         """
 }
 
+process make_bigwig {
+    publishDir "$params.outdir/deeptools/bigwig", mode:'copy', pattern: '*.bigwig'
+    cpus 2
+    memory '4 GB'
+    input:
+        path bamFile
+        path bamIndexFile
+    output:
+        path "${bamFile.getSimpleName()}.bigwig"
+
+    script:
+        """
+        bamCoverage --bam $bamFile -o ${bamFile.getSimpleName()}.bigwig ${params.processes_options.bamcoverage}
+        """
+
+}
+
 
 workflow {
-    fastqc_ch = fastqc(raw_reads_fastq_ch)
-    genome_ch = Channel.fromPath(params.genome)
-    bowtie2_index(genome_ch)
+    fastqc(raw_reads_fastq_ch)
+    bowtie2_index(Channel.fromPath(params.genome))
     bowtie_mapping(bowtie2_index.out, raw_reads_fastq_ch)
     callpeaks(bowtie_mapping.out[0])
-    // bowtie_mapping.out[0].view()
+    make_bigwig(bowtie_mapping.out[0], bowtie_mapping.out[1])
 }
