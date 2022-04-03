@@ -124,7 +124,7 @@ process make_bigwig {
 workflow {
     fastqc(raw_reads_fastq_ch)
     bowtie2_index(Channel.fromPath(params.genome))
-    bowtie_mapping(bowtie2_index.out, raw_reads_fastq_ch)
+    bowtie_mapping(bowtie2_index.out.first(), raw_reads_fastq_ch)
     callpeaks(bowtie_mapping.out[0])
     make_bigwig(bowtie_mapping.out[0], bowtie_mapping.out[1])
 }
