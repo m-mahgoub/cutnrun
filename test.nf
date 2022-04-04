@@ -1,15 +1,37 @@
 nextflow.enable.dsl=2
 
 if (params.single_end) { 
-    raw_reads_fastq_ch = Channel.fromPath(params.sample_sheet)
-                        .splitCsv(header:true, sep:',')
-                        .map { row -> [ row.sample_id, [ file(row.fastq_1, checkIfExists: true) ] ] }
+     Channel.fromPath(params.sample_sheet)
+    .splitCsv(header:true, sep:',')
+    .map { row -> [ row.sample_id, [ file(row.fastq_1, checkIfExists: true) ] ] }
+    .set { raw_reads_fastq_ch }
 } else { 
-    raw_reads_fastq_ch = Channel.fromPath(params.sample_sheet)
-                        .splitCsv(header:true, sep:',')
-                        .map { row -> [ row.sample_id, [ file(row.fastq_1, checkIfExists: true), file(row.fastq_2, checkIfExists: true) ] ] }
+    Channel.fromPath(params.sample_sheet)
+    .splitCsv(header:true, sep:',')
+    .map { row -> [ row.sample_id, [ file(row.fastq_1, checkIfExists: true), file(row.fastq_2, checkIfExists: true) ] ] }
+    .set { raw_reads_fastq_ch }
                         
 }
+
+
+process get_controls {
+    publishDir "$params.outdir/metadata", mode:'copy', pattern: '*'
+    cpus 2
+    memory '4 GB'
+    input:
+        path sample_sheet
+    output:
+        path 'chip_input_match.csv'
+ 
+    script:
+        """
+        get_controls.py $sample_sheet chip_input_match.csv
+        """
+
+}
+
+
+
 
 process fastqc {
     publishDir "$params.outdir/fastqc", mode:'copy'
@@ -122,9 +144,16 @@ process make_bigwig {
 
 
 workflow {
+    get_controls(Channel.fromPath(params.sample_sheet))
+    get_controls.out[0]
+    .splitCsv(header:true, sep:',')
+    .map { row -> [ row.sample_id, row.control] }
+    .set { sample_control_pair_ch }
+
     fastqc(raw_reads_fastq_ch)
     bowtie2_index(Channel.fromPath(params.genome))
     bowtie_mapping(bowtie2_index.out.first(), raw_reads_fastq_ch)
     callpeaks(bowtie_mapping.out[0])
     make_bigwig(bowtie_mapping.out[0], bowtie_mapping.out[1])
+    sample_control_pair_ch.view()
 }
