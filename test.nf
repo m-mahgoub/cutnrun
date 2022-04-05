@@ -31,8 +31,6 @@ process get_controls {
 }
 
 
-
-
 process fastqc {
     publishDir "$params.outdir/fastqc", mode:'copy'
     cpus 2
@@ -103,27 +101,31 @@ process bowtie_mapping {
 
 }
 
+
 process callpeaks {
     publishDir "$params.outdir/peaks/narrow", mode:'copy', pattern: '*.bed'
     cpus 4
     memory '4 GB'
     input:
+        tuple val(sampleID), val(controlID)
         path bamFile
     output:
-        path "${bamFile.getSimpleName()}.bed"
+        path "${sampleID}.bed"
  
     script:
     if( params.single_end )
         """
-        macs2 callpeak -t $bamFile -n ${bamFile.getSimpleName()} -f "BAM" --nomodel --extsize 200 ${params.processes_options.macs2}
-        mv ${bamFile.getSimpleName()}_peaks.narrowPeak ${bamFile.getSimpleName()}.bed
+        macs2 callpeak -t ${sampleID}.sorted.bam -c ${controlID}.sorted.bam -n ${sampleID} -f "BAM" --nomodel --extsize 200 ${params.processes_options.macs2}
+        mv ${sampleID}_peaks.narrowPeak ${sampleID}.bed
         """
     else
         """
-        macs2 callpeak -t $bamFile -n ${bamFile.getSimpleName()} -f "BAMPE" ${params.processes_options.macs2}
-        mv ${bamFile.getSimpleName()}_peaks.narrowPeak ${bamFile.getSimpleName()}.bed
+        macs2 callpeak -t ${sampleID}.sorted.bam -c ${controlID}.sorted.bam -n ${sampleID} -f "BAMPE" ${params.processes_options.macs2}
+        mv ${sampleID}_peaks.narrowPeak ${sampleID}.bed
         """
 }
+
+
 
 process make_bigwig {
     publishDir "$params.outdir/deeptools/bigwig", mode:'copy', pattern: '*.bigwig'
@@ -145,6 +147,8 @@ process make_bigwig {
 
 workflow {
     get_controls(Channel.fromPath(params.sample_sheet))
+    
+    // make channle that emmits pairs of sample, control
     get_controls.out[0]
     .splitCsv(header:true, sep:',')
     .map { row -> [ row.sample_id, row.control] }
@@ -153,7 +157,6 @@ workflow {
     fastqc(raw_reads_fastq_ch)
     bowtie2_index(Channel.fromPath(params.genome))
     bowtie_mapping(bowtie2_index.out.first(), raw_reads_fastq_ch)
-    callpeaks(bowtie_mapping.out[0])
+    callpeaks(sample_control_pair_ch,bowtie_mapping.out[0].collect())
     make_bigwig(bowtie_mapping.out[0], bowtie_mapping.out[1])
-    sample_control_pair_ch.view()
 }
