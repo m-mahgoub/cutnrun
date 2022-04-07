@@ -31,6 +31,23 @@ process get_controls {
 }
 
 
+process get_deeptools_user_metadata {
+    publishDir "$params.outdir/metadata", mode:'copy', pattern: '*'
+    cpus 2
+    memory '4 GB'
+    input:
+        path deeptools_user_metadata_yaml
+    output:
+        path 'bash_strings_for_deeptools.txt'
+        path 'files_paths_for_deeptools.txt'
+    script:
+        """
+        get_deeptools_user_metadata.py $deeptools_user_metadata_yaml bash_strings_for_deeptools.txt files_paths_for_deeptools.txt
+        """
+
+}
+
+
 process fastqc {
     publishDir "$params.outdir/fastqc", mode:'copy'
     cpus 2
@@ -144,6 +161,29 @@ process make_bigwig {
 
 }
 
+process name {
+    publishDir "$params.outdir/deeptools/matrix", mode:'copy', pattern: '*'
+    cpus 2
+    memory '4 GB'
+    input:
+        path X
+        tuple val(X), path(X)
+    output:
+        path "X."
+        path "X."
+ 
+    script:
+    if( params.X == XX )
+        """
+        echo X
+        """
+    else
+        """
+        echo X
+        """
+}
+
+
 
 workflow {
     get_controls(Channel.fromPath(params.sample_sheet))
@@ -153,6 +193,29 @@ workflow {
     .splitCsv(header:true, sep:',')
     .map { row -> [ row.sample_id, row.control] }
     .set { sample_control_pair_ch }
+
+    get_deeptools_user_metadata(Channel.fromPath(params.deeptools_yaml))
+    get_deeptools_user_metadata.out[0].view()
+
+    // make channle that emmits parameters and external files paths for deeptools plotting
+    get_deeptools_user_metadata.out[0]
+    .splitCsv(header:true, sep:'\t')
+    .map { row -> [ row.plot_name, [row.bed_files_inLine, row.bigwig_files_inLine, row.bed_labels_inLine_with_quotes, row.bigwig_labels_inLine_with_quotes ]] }
+    .set { strings_for_deeptools_ch }
+	// strings_for_deeptools_ch.view()
+
+    // make channle that emmits files paths for deeptools
+    get_deeptools_user_metadata.out[1]
+    .splitCsv(header:true, sep:'\t')
+    .map { row -> [ row.plot_name, row.paths_to_include] }
+    .set { paths_for_deeptools_ch }
+	// paths_for_deeptools_ch.view()
+    paths_for_deeptools_ch.join(strings_for_deeptools_ch)
+    .set { deeptools_meta_ch }
+    deeptools_meta_ch.view()
+    
+
+
 
     fastqc(raw_reads_fastq_ch)
     bowtie2_index(Channel.fromPath(params.genome))
