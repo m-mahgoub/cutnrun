@@ -9,8 +9,8 @@ with open(sys.argv[1], 'r') as file:
 
 
 all_info_as_dictionary = {}
+all_local_remote_paths_list = []  # only local and remote paths per plot
 for plot, plot_meta in yaml_dict.items():
-    local_remote_paths_list = [] # only local and remote paths per plot
     plot_name = plot_meta['name']
     all_info_as_dictionary[plot_name] = {}
     for key, user_list in plot_meta.items():
@@ -33,13 +33,15 @@ for plot, plot_meta in yaml_dict.items():
                     file_name = file_path.split('/')[-1]
                     if file_label == "":
                         file_label = file_name
-                    local_remote_paths_list.append(f'{file_path}')
+                    # all_local_remote_paths_list += f"'{file_path}', "
+                    if file_path not in all_local_remote_paths_list:
+                        all_local_remote_paths_list.append(file_path)
 
                 files_names_string += file_name + ' ' # add files names without quotes
                 files_labels_string += f'"{file_label}" '  # add files names without quotes
             all_info_as_dictionary[plot_name][key + '_files_inLine'] = files_names_string
             all_info_as_dictionary[plot_name][key + '_labels_inLine_with_quotes'] = files_labels_string
-            all_info_as_dictionary[plot_name]['paths_to_include'] = local_remote_paths_list
+            # all_info_as_dictionary[plot_name]['paths_to_include'] = all_local_remote_paths_list[:-2]
 
 
 
@@ -48,7 +50,8 @@ df = pd.DataFrame.from_dict(all_info_as_dictionary, orient='index')
 df.index.name = 'plot_name'
 
 # save the inline strings to be injected in the commandline of deeptool process
-df[df.columns.drop('paths_to_include')].to_csv(sys.argv[2],sep='\t',quotechar="'")
+df.to_csv(sys.argv[2],sep='\t',quotechar="'")
 
 # save the paths for local and remote files used for deeptool process
-df[['paths_to_include']].to_csv(sys.argv[3],sep='\t')
+df_paths = pd.DataFrame(all_local_remote_paths_list)
+df_paths.to_csv(sys.argv[3],sep='\t', index=False, header=False)

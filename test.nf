@@ -161,26 +161,22 @@ process make_bigwig {
 
 }
 
-process name {
+process plotHeatmap {
     publishDir "$params.outdir/deeptools/matrix", mode:'copy', pattern: '*'
+    publishDir "$params.outdir/deeptools/heatmaps", mode:'copy', pattern: '*'
     cpus 2
     memory '4 GB'
     input:
-        path X
-        tuple val(X), path(X)
+        path (local_remote_files)
+        tuple val(plot_name), val (bed_files_inLine), val (bigwig_files_inLine), val(bed_labels_inLine_with_quotes),  val(bigwig_labels_inLine_with_quotes)
     output:
-        path "X."
-        path "X."
+        path "comm.txt"
  
     script:
-    if( params.X == XX )
-        """
-        echo X
-        """
-    else
-        """
-        echo X
-        """
+    """
+    $plot_name $bigwig_labels_inLine_with_quotes > comm.txt
+    """
+
 }
 
 
@@ -195,26 +191,25 @@ workflow {
     .set { sample_control_pair_ch }
 
     get_deeptools_user_metadata(Channel.fromPath(params.deeptools_yaml))
-    get_deeptools_user_metadata.out[0].view()
+
 
     // make channle that emmits parameters and external files paths for deeptools plotting
     get_deeptools_user_metadata.out[0]
     .splitCsv(header:true, sep:'\t')
-    .map { row -> [ row.plot_name, [row.bed_files_inLine, row.bigwig_files_inLine, row.bed_labels_inLine_with_quotes, row.bigwig_labels_inLine_with_quotes ]] }
+    .map { row -> [ row.plot_name, row.bed_files_inLine, row.bigwig_files_inLine, row.bed_labels_inLine_with_quotes, row.bigwig_labels_inLine_with_quotes] }
     .set { strings_for_deeptools_ch }
 	// strings_for_deeptools_ch.view()
 
     // make channle that emmits files paths for deeptools
     get_deeptools_user_metadata.out[1]
-    .splitCsv(header:true, sep:'\t')
-    .map { row -> [ row.plot_name, row.paths_to_include] }
+    .splitCsv(header:false, sep:'\t')
+    .collect()
     .set { paths_for_deeptools_ch }
-	// paths_for_deeptools_ch.view()
-    paths_for_deeptools_ch.join(strings_for_deeptools_ch)
-    .set { deeptools_meta_ch }
-    deeptools_meta_ch.view()
-    
 
+
+
+    plotHeatmap(paths_for_deeptools_ch, strings_for_deeptools_ch)
+    plotHeatmap.out.view()
 
 
     fastqc(raw_reads_fastq_ch)

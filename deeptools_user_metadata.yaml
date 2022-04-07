@@ -7,7 +7,7 @@ plot_1:
         - [ remote: "https://raw.githubusercontent.com/m-mahgoub/test-datasets/main/cutnrun/bed/SPT5_T0_rep1_remote.bed", label: "T0_remote" ]
         - [ sampleID: "SPT5_T15_rep1", label: "T15" ]
         - [ local: "/Users/mohamedmm/Desktop/test/cutnrun_scripts/test_path/SPT5_T15_rep1_local.bed", label: "T15_local" ]
-        - [ remote: "https://raw.githubusercontent.com/m-mahgoub/test-datasets/main/cutnrun/bed/SPT5_T15_rep_remote.bed", label: "T15_remote" ]
+        - [ remote: "https://raw.githubusercontent.com/m-mahgoub/test-datasets/main/cutnrun/bed/SPT5_T15_rep1_remote.bed", label: "T15_remote" ]
     bigwig:
         - [ sampleID: "SPT5_T0_rep1", label: "T0" ]
         - [ local: "/Users/mohamedmm/Desktop/test/cutnrun_scripts/test_path/SPT5_T0_rep1_local.bigwig", label: "T0_local" ]
