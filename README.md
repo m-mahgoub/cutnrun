@@ -31,7 +31,7 @@ git clone https://github.com/m-mahgoub/cutnrun.git
      1) The name of the plot
      2) The paths and labels (optional) of the bed files for regions of plotting
     3) The paths and labels (optional) of the bigwig files to be plotted.
-    * These files in 2 and 3 can be either a sample in the current pipeline (only ID is provided), files in the local path of the environment running the Nextflow pipeline, or remote files in servers.
+    * These files in ii and iii can be either a sample in the current pipeline (only ID is provided), files in the local path of the environment running the Nextflow pipeline, or remote files in servers.
 
 ### Requirements:
 It is required the following dependencies are installed in the environment running the pipeline:
