@@ -156,25 +156,29 @@ process make_bigwig {
 
     script:
         """
-        bamCoverage --bam $bamFile -o ${bamFile.getSimpleName()}.bigwig ${params.processes_options.bamcoverage}
+        bamCoverage -p ${task.cpus} --bam $bamFile -o ${bamFile.getSimpleName()}.bigwig ${params.processes_options.bamcoverage}
         """
 
 }
 
 process plotHeatmap {
-    publishDir "$params.outdir/deeptools/matrix", mode:'copy', pattern: '*'
-    publishDir "$params.outdir/deeptools/heatmaps", mode:'copy', pattern: '*'
+    publishDir "$params.outdir/deeptools/matrix", mode:'copy', pattern: '*.gz'
+    publishDir "$params.outdir/deeptools/heatmaps", mode:'copy', pattern: '*.png'
     cpus 2
     memory '4 GB'
     input:
+        path callpeaks_out
+        path make_bigwig_out
         path (local_remote_files)
         tuple val(plot_name), val (bed_files_inLine), val (bigwig_files_inLine), val(bed_labels_inLine_with_quotes),  val(bigwig_labels_inLine_with_quotes)
     output:
-        path "comm.txt"
+        path "${plot_name}.gz"
+        path "${plot_name}.png"
  
     script:
     """
-    $plot_name $bigwig_labels_inLine_with_quotes > comm.txt
+    computeMatrix reference-point --referencePoint center -R $bed_files_inLine -S $bigwig_files_inLine -o ${plot_name}.gz -p ${task.cpus} ${params.processes_options.computeMatrix}
+    plotHeatmap -m ${plot_name}.gz -out ${plot_name}.png ${params.processes_options.plotHeatmap} --regionsLabel $bed_labels_inLine_with_quotes --samplesLabel $bigwig_labels_inLine_with_quotes
     """
 
 }
@@ -193,28 +197,21 @@ workflow {
     get_deeptools_user_metadata(Channel.fromPath(params.deeptools_yaml))
 
 
-    // make channle that emmits parameters and external files paths for deeptools plotting
+    // make channle that emmits deepttols beds and bigwig options as string
     get_deeptools_user_metadata.out[0]
     .splitCsv(header:true, sep:'\t')
     .map { row -> [ row.plot_name, row.bed_files_inLine, row.bigwig_files_inLine, row.bed_labels_inLine_with_quotes, row.bigwig_labels_inLine_with_quotes] }
     .set { strings_for_deeptools_ch }
-	// strings_for_deeptools_ch.view()
-
-    // make channle that emmits files paths for deeptools
+    // make channle that emmits local and remote files paths for deeptools
     get_deeptools_user_metadata.out[1]
     .splitCsv(header:false, sep:'\t')
     .collect()
     .set { paths_for_deeptools_ch }
-
-
-
-    plotHeatmap(paths_for_deeptools_ch, strings_for_deeptools_ch)
-    plotHeatmap.out.view()
-
 
     fastqc(raw_reads_fastq_ch)
     bowtie2_index(Channel.fromPath(params.genome))
     bowtie_mapping(bowtie2_index.out.first(), raw_reads_fastq_ch)
     callpeaks(sample_control_pair_ch,bowtie_mapping.out[0].collect())
     make_bigwig(bowtie_mapping.out[0], bowtie_mapping.out[1])
+    plotHeatmap(callpeaks.out.collect(), make_bigwig.out.collect(), paths_for_deeptools_ch, strings_for_deeptools_ch)
 }
