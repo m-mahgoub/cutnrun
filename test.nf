@@ -15,7 +15,8 @@ if (params.single_end) {
 
 
 process get_controls {
-    tag "local"
+    time '10m'
+    conda "conda_env.yaml"
     publishDir "$params.outdir/metadata", mode:'copy', pattern: '*'
     cpus 2
     memory '4 GB'
@@ -33,7 +34,8 @@ process get_controls {
 
 
 process get_deeptools_user_metadata {
-    tag "local"
+    time '10m'
+    conda "conda_env.yaml"
     publishDir "$params.outdir/metadata", mode:'copy', pattern: '*'
     cpus 2
     memory '4 GB'
@@ -51,7 +53,7 @@ process get_deeptools_user_metadata {
 
 
 process fastqc {
-    tag "cluster"
+    time '30m'
     container  "quay.io/biocontainers/fastqc:0.11.9--0"
     publishDir "$params.outdir/fastqc", mode:'copy'
     cpus 2
@@ -76,9 +78,11 @@ process fastqc {
 }
 
 process bowtie2_index {
+    time '30m'
+    container  "quay.io/biocontainers/bowtie2:2.4.5--py38he5f0661_1"
     publishDir "$params.outdir/bowtie_index", mode:'copy'
     cpus 4
-    memory '4 GB'
+    memory '8 GB'
     input:
         path(genome_fasta)
     output:
@@ -94,10 +98,12 @@ process bowtie2_index {
 
 
 process bowtie_mapping {
+    time '30m'
+    container  "alexeyebi/bowtie2_samtools:latest"
     publishDir "$params.outdir/bowtie_mapping/bams", mode:'copy', pattern: '*.ba*'
     publishDir "$params.outdir/bowtie_mapping/logs", mode:'copy', pattern: '*.log'
-    cpus 2
-    memory '4 GB'
+    cpus 4
+    memory '8 GB'
     input:
         path index
         tuple val(sampleID), path(reads)
@@ -124,9 +130,11 @@ process bowtie_mapping {
 
 
 process callpeaks {
+    time '30m'
+    container  "quay.io/biocontainers/macs2:2.2.7.1--py38hbff2b2d_4"
     publishDir "$params.outdir/peaks/narrow", mode:'copy', pattern: '*.bed'
     cpus 4
-    memory '4 GB'
+    memory '8 GB'
     input:
         tuple val(sampleID), val(controlID)
         path bamFile
@@ -149,9 +157,11 @@ process callpeaks {
 
 
 process make_bigwig {
+    time '30m'
+    container  "quay.io/biocontainers/deeptools:3.5.1--py_0"
     publishDir "$params.outdir/deeptools/bigwig", mode:'copy', pattern: '*.bigwig'
-    cpus 2
-    memory '4 GB'
+    cpus 4
+    memory '8 GB'
     input:
         path bamFile
         path bamIndexFile
@@ -166,6 +176,8 @@ process make_bigwig {
 }
 
 process plotHeatmap {
+    time '30m'
+    container  "quay.io/biocontainers/deeptools:3.5.1--py_0"
     publishDir "$params.outdir/deeptools/matrix", mode:'copy', pattern: '*.gz'
     publishDir "$params.outdir/deeptools/heatmaps", mode:'copy', pattern: '*.png'
     cpus 2
@@ -213,9 +225,9 @@ workflow {
     .set { paths_for_deeptools_ch }
 
     fastqc(raw_reads_fastq_ch)
-    // bowtie2_index(Channel.fromPath(params.genome))
-    // bowtie_mapping(bowtie2_index.out.first(), raw_reads_fastq_ch)
-    // callpeaks(sample_control_pair_ch,bowtie_mapping.out[0].collect())
-    // make_bigwig(bowtie_mapping.out[0], bowtie_mapping.out[1])
-    // plotHeatmap(callpeaks.out.collect(), make_bigwig.out.collect(), paths_for_deeptools_ch, strings_for_deeptools_ch)
+    bowtie2_index(Channel.fromPath(params.genome))
+    bowtie_mapping(bowtie2_index.out.first(), raw_reads_fastq_ch)
+    callpeaks(sample_control_pair_ch,bowtie_mapping.out[0].collect())
+    make_bigwig(bowtie_mapping.out[0], bowtie_mapping.out[1])
+    plotHeatmap(callpeaks.out.collect(), make_bigwig.out.collect(), paths_for_deeptools_ch, strings_for_deeptools_ch)
 }
