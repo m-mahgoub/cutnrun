@@ -15,6 +15,7 @@ if (params.single_end) {
 
 
 process get_controls {
+    tag "local"
     publishDir "$params.outdir/metadata", mode:'copy', pattern: '*'
     cpus 2
     memory '4 GB'
@@ -32,6 +33,7 @@ process get_controls {
 
 
 process get_deeptools_user_metadata {
+    tag "local"
     publishDir "$params.outdir/metadata", mode:'copy', pattern: '*'
     cpus 2
     memory '4 GB'
@@ -49,6 +51,8 @@ process get_deeptools_user_metadata {
 
 
 process fastqc {
+    tag "cluster"
+    container  "quay.io/biocontainers/fastqc:0.11.9--0"
     publishDir "$params.outdir/fastqc", mode:'copy'
     cpus 2
     memory '4 GB'
@@ -209,9 +213,9 @@ workflow {
     .set { paths_for_deeptools_ch }
 
     fastqc(raw_reads_fastq_ch)
-    bowtie2_index(Channel.fromPath(params.genome))
-    bowtie_mapping(bowtie2_index.out.first(), raw_reads_fastq_ch)
-    callpeaks(sample_control_pair_ch,bowtie_mapping.out[0].collect())
-    make_bigwig(bowtie_mapping.out[0], bowtie_mapping.out[1])
-    plotHeatmap(callpeaks.out.collect(), make_bigwig.out.collect(), paths_for_deeptools_ch, strings_for_deeptools_ch)
+    // bowtie2_index(Channel.fromPath(params.genome))
+    // bowtie_mapping(bowtie2_index.out.first(), raw_reads_fastq_ch)
+    // callpeaks(sample_control_pair_ch,bowtie_mapping.out[0].collect())
+    // make_bigwig(bowtie_mapping.out[0], bowtie_mapping.out[1])
+    // plotHeatmap(callpeaks.out.collect(), make_bigwig.out.collect(), paths_for_deeptools_ch, strings_for_deeptools_ch)
 }
