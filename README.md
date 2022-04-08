@@ -1,3 +1,6 @@
+!!!! This pipeline is still under development !!!!
+
+
 # cutnrun
 
 cutnrun is a Nextflow pipeline for CUT&RUN analysis.
