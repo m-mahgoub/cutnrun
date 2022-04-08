@@ -26,7 +26,7 @@ git clone https://github.com/m-mahgoub/cutnrun.git
 ## Usage
 ### Input files:
 1. fastq raw reads (either paired-end or single-end), provided as a full path in the samplesheet.csv files
-2. Path for reference genome fasta field provided as a parameter in nextflow.config file
+2. Path for reference genome fasta file provided as a parameter in nextflow.config file
 3. Define the plotting strategy for the desired heatmaps in YAML format in “deeptools_user_metadata.yaml” file (as shown in the sample file). The user can add as many plots as required, and specify:
      1) The name of the plot
      2) The paths and labels (optional) of the bed files for regions of plotting
