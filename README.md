@@ -35,9 +35,9 @@ git clone https://github.com/m-mahgoub/cutnrun.git
 
 ### Requirements:
 This pipeline requires the following dependencies to be installed and avaialable in the path of the environment running the pipeline:
-1. **[Nextflow >= 20.07.1] (https://www.nextflow.io/). Older versions don't support DSL2 synatax used in this pipeline are not comaptible as.**
+1. **[Nextflow >= 20.07.1](https://www.nextflow.io/). Older versions don't support DSL2 synatax used in this pipeline are not comaptible as.**
 2. [Miniconda](https://docs.conda.io/projects/conda/en/latest/).
-3. [Singularity] (https://sylabs.io/singularity) or [Docker](https://www.docker.com/).
+3. [Singularity](https://sylabs.io/singularity) or [Docker](https://www.docker.com/).
 
 ### Running pipeline in local environment
 with Singularity
