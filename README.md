@@ -58,9 +58,9 @@ or with Docker
 nextflow run test.nf -profile slurm,docker
 ```
 
-### Test run can be performed by: 
-1. Cloning the repository
-2. Running the previous commands in environment satisfying requirements.
+### Test run: 
+1. Clone the repository
+2. Run the previous commands in any environment satisfying the requirements.
 3. Output from test run should be generated in a directory named "results". If the test run is successful, "results" directory should be identical to the directory named "testOut"
 
 ## Credit:
