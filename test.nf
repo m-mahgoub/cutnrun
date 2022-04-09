@@ -80,7 +80,7 @@ process fastqc {
 process bowtie2_index {
     time '30m'
     container  "quay.io/biocontainers/bowtie2:2.4.5--py38he5f0661_1"
-    publishDir "$params.outdir/bowtie_index", mode:'copy'
+    publishDir "$params.outdir/", mode:'copy'
     cpus 4
     memory '8 GB'
     input:
