@@ -33,20 +33,20 @@ process get_controls {
 }
 
 
-process get_deeptools_user_metadata {
+process heatmap_blueprint {
     time '10m'
     conda "conda_env.yaml"
     publishDir "$params.outdir/metadata", mode:'copy', pattern: '*'
     cpus 2
     memory '4 GB'
     input:
-        path deeptools_user_metadata_yaml
+        path heatmap_blueprint_yaml
     output:
         path 'bash_strings_for_deeptools.txt'
         path 'files_paths_for_deeptools.txt'
     script:
         """
-        get_deeptools_user_metadata.py $deeptools_user_metadata_yaml bash_strings_for_deeptools.txt files_paths_for_deeptools.txt
+        get_heatmap_blueprint.py $heatmap_blueprint_yaml bash_strings_for_deeptools.txt files_paths_for_deeptools.txt
         """
 
 }
@@ -210,16 +210,16 @@ workflow {
     .map { row -> [ row.sample_id, row.control] }
     .set { sample_control_pair_ch }
 
-    get_deeptools_user_metadata(Channel.fromPath(params.deeptools_yaml))
+    heatmap_blueprint(Channel.fromPath(params.heatmap_blueprint_yaml))
 
 
     // make channle that emmits deepttols beds and bigwig options as string
-    get_deeptools_user_metadata.out[0]
+    heatmap_blueprint.out[0]
     .splitCsv(header:true, sep:'\t')
     .map { row -> [ row.plot_name, row.bed_files_inLine, row.bigwig_files_inLine, row.bed_labels_inLine_with_quotes, row.bigwig_labels_inLine_with_quotes] }
     .set { strings_for_deeptools_ch }
     // make channle that emmits local and remote files paths for deeptools
-    get_deeptools_user_metadata.out[1]
+    heatmap_blueprint.out[1]
     .splitCsv(header:false, sep:'\t')
     .collect()
     .set { paths_for_deeptools_ch }

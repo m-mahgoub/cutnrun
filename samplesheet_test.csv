@@ -1,2 +1,0 @@
-sample_id,group,replicate,fastq_1,fastq_2,antibody,control
-SPT5_T0_rep1,SPT5_T0,1,data/reads/t0_rep1_R1.fastq.gz,data/reads/t0_rep1_R2.fastq.gz,SPT5,SPT5_INPUT

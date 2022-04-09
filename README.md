@@ -1,5 +1,5 @@
-!!!! This pipeline is still under development !!!!
-
+### **!!!! This pipeline is still under development !!!!**
+<br>
 
 # cutnrun
 
@@ -27,10 +27,10 @@ git clone https://github.com/m-mahgoub/cutnrun.git
 ### Input files:
 1. fastq raw reads (either paired-end or single-end), provided as a full path in the samplesheet.csv files
 2. Path for reference genome fasta file provided as a parameter in nextflow.config file
-3. Define the plotting strategy for the desired heatmaps in YAML format in “deeptools_user_metadata.yaml” file (as shown in the sample file). The user can add as many plots as required, and specify:
+3. Define the plotting strategy for the desired heatmaps in YAML format in “heatmap_blueprint.yaml” file (as shown in the sample file). The user can add as many plots as required, and specify:
      1) The name of the plot
      2) The paths and labels (optional) of the bed files for regions of plotting
-    3) The paths and labels (optional) of the bigwig files to be plotted.
+     3) The paths and labels (optional) of the bigwig files to be plotted.
     * These files in ii and iii can be either a sample in the current pipeline (only ID is provided), files in the local path of the environment running the Nextflow pipeline, or remote files in servers.
 
 ### Requirements:
@@ -58,3 +58,11 @@ or with Docker
 nextflow run test.nf -profile slurm,docker
 ```
 
+### Test run can be performed by: 
+1. Cloning the repository
+2. Running the previous commands in environment satisfying requirements.
+3. Output from test run should be generated in a directory named "results". If the test run is successful, "results" directory should be identical to the directory named "testOut"
+
+## Credit:
+- Sample Datasets used in this pipeline are from nf-core chipseq repository (https://github.com/nf-core/chipseq)
+- Original Sample Data Sheet: https://raw.githubusercontent.com/nf-core/test-datasets/chipseq/design.csv

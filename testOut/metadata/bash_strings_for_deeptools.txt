@@ -1,0 +1,3 @@
+plot_name	bed_files_inLine	bed_labels_inLine_with_quotes	bigwig_files_inLine	bigwig_labels_inLine_with_quotes
+Replicate_1	SPT5_T0_rep1.bed SPT5_T0_rep1_remote.bed SPT5_T15_rep1.bed SPT5_T15_rep1_remote.bed 	"T0" "T0_remote" "T15" "T15_remote" 	SPT5_T0_rep1.bigwig SPT5_INPUT_rep1.bigwig SPT5_T0_rep1_remote.bigwig SPT5_T15_rep1.bigwig SPT5_T15_rep1_remote.bigwig 	"T0" "T0 Input" "T0_remote" "T15" "T15_remote" 
+Replicate_2	SPT5_T0_rep2.bed SPT5_T0_rep2_remote.bed SPT5_T15_rep2.bed SPT5_T15_rep2_remote.bed 	"T0" "T0_remote" "T15" "T15_remote" 	SPT5_T0_rep2.bigwig SPT5_INPUT_rep2.bigwig SPT5_T0_rep2_remote.bigwig SPT5_T15_rep2.bigwig SPT5_T15_rep2_remote.bigwig 	"T0" "T0 Input" "T0_remote" "T15" "T15_remote" 
