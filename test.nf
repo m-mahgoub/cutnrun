@@ -15,8 +15,8 @@ if (params.single_end) {
 
 
 process get_controls {
+    container  "mdivr/conda-nf-cutnrun:v0.1"
     time '10m'
-    conda "conda_env.yaml"
     publishDir "$params.outdir/metadata", mode:'copy', pattern: '*'
     cpus 2
     memory '4 GB'
@@ -35,7 +35,7 @@ process get_controls {
 
 process heatmap_blueprint {
     time '10m'
-    conda "conda_env.yaml"
+    container  "mdivr/conda-nf-cutnrun:v0.1"
     publishDir "$params.outdir/metadata", mode:'copy', pattern: '*'
     cpus 2
     memory '4 GB'
@@ -81,8 +81,8 @@ process bowtie2_index {
     time '30m'
     container  "quay.io/biocontainers/bowtie2:2.4.5--py38he5f0661_1"
     publishDir "$params.outdir/", mode:'copy'
-    cpus 4
-    memory '8 GB'
+    cpus 2
+    memory '4 GB'
     input:
         path(genome_fasta)
     output:
@@ -102,8 +102,8 @@ process bowtie_mapping {
     container  "alexeyebi/bowtie2_samtools:latest"
     publishDir "$params.outdir/bowtie_mapping/bams", mode:'copy', pattern: '*.ba*'
     publishDir "$params.outdir/bowtie_mapping/logs", mode:'copy', pattern: '*.log'
-    cpus 4
-    memory '8 GB'
+    cpus 2
+    memory '4 GB'
     input:
         path index
         tuple val(sampleID), path(reads)
@@ -133,8 +133,8 @@ process callpeaks {
     time '30m'
     container  "quay.io/biocontainers/macs2:2.2.7.1--py38hbff2b2d_4"
     publishDir "$params.outdir/peaks/narrow", mode:'copy', pattern: '*.bed'
-    cpus 4
-    memory '8 GB'
+    cpus 2
+    memory '4 GB'
     input:
         tuple val(sampleID), val(controlID)
         path bamFile
@@ -160,8 +160,8 @@ process make_bigwig {
     time '30m'
     container  "quay.io/biocontainers/deeptools:3.5.1--py_0"
     publishDir "$params.outdir/deeptools/bigwig", mode:'copy', pattern: '*.bigwig'
-    cpus 4
-    memory '8 GB'
+    cpus 2
+    memory '4 GB'
     input:
         path bamFile
         path bamIndexFile
