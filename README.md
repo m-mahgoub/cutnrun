@@ -65,4 +65,4 @@ nextflow run test.nf -profile slurm,docker
 
 ## Credit:
 - Sample Datasets used in this pipeline are from nf-core chipseq repository (https://github.com/nf-core/chipseq)
-- Original Sample Data Sheet: https://raw.githubusercontent.com/nf-core/test-datasets/chipseq/design.csv
+- Original Sample Data Sheet: https://raw.githubusercontent.com/nf-core/cutnrun-test-datasets/chipseq/design.csv

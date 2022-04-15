@@ -1,8 +1,8 @@
-https://raw.githubusercontent.com/m-mahgoub/test-datasets/main/cutnrun/bed/SPT5_T0_rep1_remote.bed
-https://raw.githubusercontent.com/m-mahgoub/test-datasets/main/cutnrun/bed/SPT5_T15_rep1_remote.bed
-https://raw.githubusercontent.com/m-mahgoub/test-datasets/main/cutnrun/bigwig/SPT5_T0_rep1_remote.bigwig
-https://raw.githubusercontent.com/m-mahgoub/test-datasets/main/cutnrun/bigwig/SPT5_T15_rep1_remote.bigwig
-https://raw.githubusercontent.com/m-mahgoub/test-datasets/main/cutnrun/bed/SPT5_T0_rep2_remote.bed
-https://raw.githubusercontent.com/m-mahgoub/test-datasets/main/cutnrun/bed/SPT5_T15_rep2_remote.bed
-https://raw.githubusercontent.com/m-mahgoub/test-datasets/main/cutnrun/bigwig/SPT5_T0_rep2_remote.bigwig
-https://raw.githubusercontent.com/m-mahgoub/test-datasets/main/cutnrun/bigwig/SPT5_T15_rep2_remote.bigwig
+https://raw.githubusercontent.com/m-mahgoub/cutnrun-test-datasets/main/cutnrun/bed/SPT5_T0_rep1_remote.bed
+https://raw.githubusercontent.com/m-mahgoub/cutnrun-test-datasets/main/cutnrun/bed/SPT5_T15_rep1_remote.bed
+https://raw.githubusercontent.com/m-mahgoub/cutnrun-test-datasets/main/cutnrun/bigwig/SPT5_T0_rep1_remote.bigwig
+https://raw.githubusercontent.com/m-mahgoub/cutnrun-test-datasets/main/cutnrun/bigwig/SPT5_T15_rep1_remote.bigwig
+https://raw.githubusercontent.com/m-mahgoub/cutnrun-test-datasets/main/cutnrun/bed/SPT5_T0_rep2_remote.bed
+https://raw.githubusercontent.com/m-mahgoub/cutnrun-test-datasets/main/cutnrun/bed/SPT5_T15_rep2_remote.bed
+https://raw.githubusercontent.com/m-mahgoub/cutnrun-test-datasets/main/cutnrun/bigwig/SPT5_T0_rep2_remote.bigwig
+https://raw.githubusercontent.com/m-mahgoub/cutnrun-test-datasets/main/cutnrun/bigwig/SPT5_T15_rep2_remote.bigwig
