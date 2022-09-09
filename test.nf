@@ -15,7 +15,6 @@ if (params.single_end) {
 
 
 process get_controls {
-    conda "conda_env.yaml"
     publishDir "$params.outdir/metadata", mode:'copy', pattern: '*'
     cpus 2
     memory '4 GB'
@@ -34,7 +33,7 @@ process get_controls {
 
 process heatmap_blueprint {
     time '10m'
-    conda "conda_env.yaml"
+    conda "pyyaml pandas"
     publishDir "$params.outdir/metadata", mode:'copy', pattern: '*'
     cpus 2
     memory '4 GB'
@@ -53,7 +52,7 @@ process heatmap_blueprint {
 
 process fastqc {
     time '30m'
-    conda "conda_env.yaml"
+    conda "fastqc"
     publishDir "$params.outdir/fastqc", mode:'copy'
     cpus 2
     memory '4 GB'
@@ -78,7 +77,7 @@ process fastqc {
 
 process bowtie2_index {
     time '30m'
-    conda "conda_env.yaml"
+    conda "bowtie2"
     publishDir "$params.outdir/", mode:'copy'
     cpus 2
     memory '4 GB'
@@ -98,7 +97,7 @@ process bowtie2_index {
 
 process bowtie_mapping {
     time '30m'
-    conda "conda_env.yaml"
+    conda "bowtie2 samtools pigz"
     publishDir "$params.outdir/bowtie_mapping/bams", mode:'copy', pattern: '*.ba*'
     publishDir "$params.outdir/bowtie_mapping/logs", mode:'copy', pattern: '*.log'
     cpus 2
@@ -130,7 +129,7 @@ process bowtie_mapping {
 
 process callpeaks {
     time '30m'
-    conda "conda_env.yaml"
+    conda "macs2"
     publishDir "$params.outdir/peaks/narrow", mode:'copy', pattern: '*.bed'
     cpus 2
     memory '4 GB'
@@ -157,7 +156,7 @@ process callpeaks {
 
 process make_bigwig {
     time '30m'
-    conda "conda_env.yaml"
+    conda "deeptools"
     publishDir "$params.outdir/deeptools/bigwig", mode:'copy', pattern: '*.bigwig'
     cpus 2
     memory '4 GB'
@@ -176,7 +175,7 @@ process make_bigwig {
 
 process plotHeatmap {
     time '30m'
-    conda "conda_env.yaml"
+    conda "deeptools"
     publishDir "$params.outdir/deeptools/matrix", mode:'copy', pattern: '*.gz'
     publishDir "$params.outdir/deeptools/heatmaps", mode:'copy', pattern: '*.png'
     cpus 2
