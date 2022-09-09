@@ -15,8 +15,7 @@ if (params.single_end) {
 
 
 process get_controls {
-    container  "mdivr/conda-nf-cutnrun:v0.1"
-    time '10m'
+    conda "conda_env.yaml"
     publishDir "$params.outdir/metadata", mode:'copy', pattern: '*'
     cpus 2
     memory '4 GB'
@@ -35,7 +34,7 @@ process get_controls {
 
 process heatmap_blueprint {
     time '10m'
-    container  "mdivr/conda-nf-cutnrun:v0.1"
+    conda "conda_env.yaml"
     publishDir "$params.outdir/metadata", mode:'copy', pattern: '*'
     cpus 2
     memory '4 GB'
@@ -54,7 +53,7 @@ process heatmap_blueprint {
 
 process fastqc {
     time '30m'
-    container  "quay.io/biocontainers/fastqc:0.11.9--0"
+    conda "conda_env.yaml"
     publishDir "$params.outdir/fastqc", mode:'copy'
     cpus 2
     memory '4 GB'
@@ -79,7 +78,7 @@ process fastqc {
 
 process bowtie2_index {
     time '30m'
-    container  "quay.io/biocontainers/bowtie2:2.4.5--py38he5f0661_1"
+    conda "conda_env.yaml"
     publishDir "$params.outdir/", mode:'copy'
     cpus 2
     memory '4 GB'
@@ -99,7 +98,7 @@ process bowtie2_index {
 
 process bowtie_mapping {
     time '30m'
-    container  "alexeyebi/bowtie2_samtools:latest"
+    conda "conda_env.yaml"
     publishDir "$params.outdir/bowtie_mapping/bams", mode:'copy', pattern: '*.ba*'
     publishDir "$params.outdir/bowtie_mapping/logs", mode:'copy', pattern: '*.log'
     cpus 2
@@ -131,7 +130,7 @@ process bowtie_mapping {
 
 process callpeaks {
     time '30m'
-    container  "quay.io/biocontainers/macs2:2.2.7.1--py38hbff2b2d_4"
+    conda "conda_env.yaml"
     publishDir "$params.outdir/peaks/narrow", mode:'copy', pattern: '*.bed'
     cpus 2
     memory '4 GB'
@@ -158,7 +157,7 @@ process callpeaks {
 
 process make_bigwig {
     time '30m'
-    container  "quay.io/biocontainers/deeptools:3.5.1--py_0"
+    conda "conda_env.yaml"
     publishDir "$params.outdir/deeptools/bigwig", mode:'copy', pattern: '*.bigwig'
     cpus 2
     memory '4 GB'
@@ -177,7 +176,7 @@ process make_bigwig {
 
 process plotHeatmap {
     time '30m'
-    container  "quay.io/biocontainers/deeptools:3.5.1--py_0"
+    conda "conda_env.yaml"
     publishDir "$params.outdir/deeptools/matrix", mode:'copy', pattern: '*.gz'
     publishDir "$params.outdir/deeptools/heatmaps", mode:'copy', pattern: '*.png'
     cpus 2

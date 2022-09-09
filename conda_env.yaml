@@ -5,5 +5,11 @@ channels:
   - defaults
 dependencies:
   - python=3.8
-  - pyyaml=6.0
-  - pandas=1.4.1
+  - pyyaml
+  - pandas
+  - fastqc
+  - bowtie2
+  - samtools
+  - pigz
+  - macs2
+  - deeptools
